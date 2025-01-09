@@ -12,6 +12,8 @@ set(SOURCES
 "src/Map.cpp"
 "src/Player.cpp"
 
+ "src/Object.cpp" 
+ "src/Wall.cpp"
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})

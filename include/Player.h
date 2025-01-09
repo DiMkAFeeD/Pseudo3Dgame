@@ -13,15 +13,11 @@ private:
 	sf::Vector2f position;
 
 	sf::Vector2i lastMousePos;
-
 	sf::CircleShape playerCircle;
 public:
+
+	void setPosition(const sf::Vector2f& newPos);
 	void eventProcessing(const std::optional<sf::Event>& event);
 	void Move(const float& deltaTime);
-	void draw(sf::RenderWindow& window) {
-		playerCircle.setFillColor(sf::Color::Red);
-		playerCircle.setRadius(radius);
-		playerCircle.setPointCount(100);
-		window.draw(playerCircle);
-	}
+	void draw(sf::RenderWindow& window);
 };
