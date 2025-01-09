@@ -9,6 +9,9 @@ find_package(SFML 3.0 REQUIRED COMPONENTS Graphics Window System)
 
 set(SOURCES
     src/main.cpp
+"src/Map.cpp"
+"src/Player.cpp"
+
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
