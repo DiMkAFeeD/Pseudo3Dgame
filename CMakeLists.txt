@@ -8,13 +8,15 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 find_package(SFML 3.0 REQUIRED COMPONENTS Graphics Window System)
 
 set(SOURCES
-    src/main.cpp
-"src/Map.cpp"
-"src/Player.cpp"
+ "src/main.cpp"
+
+ "src/Map.cpp"
+ "src/Player.cpp"
 
  "src/Object.cpp" 
  "src/Wall.cpp"
-)
+
+ "src/Camera.cpp")
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 

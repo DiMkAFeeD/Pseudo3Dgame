@@ -5,6 +5,11 @@ void Player::setPosition(const sf::Vector2f& newPos)
 	position = newPos;
 }
 
+Camera& Player::getCamera()
+{
+	return camera;
+}
+
 void Player::eventProcessing(const std::optional<sf::Event>& event)
 {
 	if (event->is<sf::Event::MouseButtonPressed>()) {
@@ -43,6 +48,11 @@ void Player::Move(const float& deltaTime)
 	}
 
 	playerCircle.setPosition(position - sf::Vector2f(radius, radius));
+}
+
+void Player::Update(sf::RenderWindow& window, Map& map)
+{
+	camera.Update(position, window, angle, map);
 }
 
 void Player::draw(sf::RenderWindow& window)

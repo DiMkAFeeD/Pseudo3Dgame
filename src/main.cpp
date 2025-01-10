@@ -53,6 +53,8 @@ int main() {
 
     mapInit(player, mapInString, map);
 
+    sf::Clock clock;
+
     while (window.isOpen()) {
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>())
@@ -61,11 +63,16 @@ int main() {
             player.eventProcessing(event);
         }
 
+        float deltaTime = clock.restart().asSeconds();
+
         if (window.hasFocus()) {
-            player.Move(1);
+            player.Move(deltaTime);
+            player.Update(window, map);
         }
 
         window.clear();
+
+        player.getCamera().render(window);
 
         map.draw(window);
         player.draw(window);

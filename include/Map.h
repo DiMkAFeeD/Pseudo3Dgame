@@ -13,5 +13,7 @@ private:
 public:
 	void addWall(sf::FloatRect rect);
 
+	std::vector<sf::Vector2f> getCollisions(const sf::Vector2f& A, const sf::Vector2f& B);
+
 	void draw(sf::RenderWindow& window);
 };
