@@ -11,7 +11,7 @@ void Camera::setNumRay(float rayNums)
 	numRays = rayNums;
 }
 
-void Camera::castRay(const sf::Vector2f& rayStart, const sf::Vector2f& rayEnd, sf::Angle& rayDir, Map& map)
+void Camera::castRay(const sf::Vector2f& rayStart, const sf::Vector2f& rayEnd, sf::Angle& rayDir, sf::RenderWindow& window, Map& map)
 {
 	miniMapView.append(sf::Vertex({ rayStart }));
 	std::vector<sf::Vector2f> points = map.getCollisions(rayStart, rayEnd);
@@ -24,7 +24,18 @@ void Camera::castRay(const sf::Vector2f& rayStart, const sf::Vector2f& rayEnd, s
 		}
 		miniMapView.append(sf::Vertex({ rayStart + sf::Vector2f(cos(rayDir.asRadians()) * minDistance, sin(rayDir.asRadians()) * minDistance) }));
 
+		float lineX = (window.getSize().x / 2) + (i * (window.getSize().x / numRays));
 
+		float wallHeight = (window.getSize().y * 1.5f) / (minDistance + 0.1f);
+
+		float topLineY = (window.getSize().y / 2) - (wallHeight / 2) * objectHeight;
+		float bottomLineY = (window.getSize().y / 2) + (wallHeight / 2) * objectHeight;
+
+		float stpGray = 255 - (255 / maxRayLenght) * minDistance;
+		sf::Color color(stpGray, stpGray, stpGray);
+
+		viewInCamera.append(sf::Vertex{ sf::Vector2f(lineX, bottomLineY), color });
+		viewInCamera.append(sf::Vertex{ sf::Vector2f(lineX, topLineY), color });
 	}
 	else {
 		miniMapView.append(sf::Vertex({ rayEnd }));
@@ -35,11 +46,11 @@ void Camera::Update(const sf::Vector2f& position, sf::RenderWindow& window, sf::
 {
 	miniMapView.clear();
 	viewInCamera.clear();
-	for (int i = -numRays / 2; i < numRays / 2; ++i) {
+	for (i = -numRays / 2; i < numRays / 2; ++i) {
 
 		sf::Angle rayDir = angle - (FOV/2) + (FOV / numRays) * i;	
 		sf::Vector2f rayEnd = { cos(rayDir.asRadians()) * maxRayLenght, sin(rayDir.asRadians()) * maxRayLenght };
-		castRay(position, position + rayEnd, rayDir, map);
+		castRay(position, position + rayEnd, rayDir, window, map);
 	}
 }
 

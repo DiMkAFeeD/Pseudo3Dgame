@@ -14,8 +14,11 @@ private:
 	float maxRayLenght = 150;
 	float numRays = 100;
 
-	void castRay(const sf::Vector2f& rayStart, const sf::Vector2f& rayEnd, sf::Angle& rayDir, Map& map);
+	float objectHeight = 10;
 
+	int i = 0;
+
+	void castRay(const sf::Vector2f& rayStart, const sf::Vector2f& rayEnd, sf::Angle& rayDir, sf::RenderWindow& window, Map& map);
 
 public:
 	Camera(const float& maxLenght = 150);

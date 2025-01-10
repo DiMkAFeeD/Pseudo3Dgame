@@ -34,6 +34,8 @@ int main() {
     Player player;
     Map map;
 
+    player.getCamera().setNumRay(window.getSize().x);
+
     std::string mapInString =
         "###############\n"
         "#.......####..#\n"
@@ -53,12 +55,22 @@ int main() {
 
     mapInit(player, mapInString, map);
 
+    sf::View view;
+    view.setSize(sf::Vector2f(window.getSize()));
+    view.setCenter(sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2));
+
     sf::Clock clock;
 
     while (window.isOpen()) {
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>())
                 window.close();
+
+            if (event->is<sf::Event::Resized>()) {
+                player.getCamera().setNumRay(window.getSize().x);
+                view.setSize(sf::Vector2f(window.getSize()));
+                view.setCenter(sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2));
+            }
 
             player.eventProcessing(event);
         }
@@ -71,10 +83,11 @@ int main() {
         }
 
         window.clear();
-
-        player.getCamera().render(window);
+        window.setView(view);
 
         map.draw(window);
+        player.getCamera().render(window);
+
         player.draw(window);
 
         window.display();
